@@ -9,6 +9,7 @@ import com.metacodestudio.hotsuploader.models.ReplayFile;
 import com.metacodestudio.hotsuploader.models.stringconverters.HeroConverter;
 import com.metacodestudio.hotsuploader.providers.HotsLogsProvider;
 import com.metacodestudio.hotsuploader.scene.control.CustomListCellFactory;
+import com.metacodestudio.hotsuploader.scene.layout.MatchMakingBox;
 import com.metacodestudio.hotsuploader.services.HeroService;
 import com.metacodestudio.hotsuploader.utils.*;
 import com.metacodestudio.hotsuploader.versions.GitHubRelease;
@@ -57,13 +58,7 @@ public class HomeController {
     private Label status;
 
     @FXML
-    private Label qmMmr;
-
-    @FXML
-    private Label hlMmr;
-
-    @FXML
-    private Label tlMmr;
+    private MatchMakingBox matchMakingBox;
 
     @FXML
     private ImageView logo;
@@ -240,9 +235,10 @@ public class HomeController {
                 return null;
             }
         });
+
+        matchMakingBox.bind(accountSelect.getSelectionModel());
         accountSelect.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.intValue() != -1) {
-                updateAccountView(accountSelect.getItems().get(newValue.intValue()));
                 viewProfile.setDisable(false);
             }
         });
@@ -252,37 +248,6 @@ public class HomeController {
 
         service.setOnSucceeded(event -> updatePlayers(service.getValue()));
         service.start();
-    }
-
-    private void updateAccountView(final Account account) {
-        final String ifNotPresent = "N/A";
-        if (account == null) {
-            return;
-        }
-
-        final Optional<Integer> quickMatchMmr = readMmr(account.getLeaderboardRankings(), "QuickMatch");
-        applyToLabel(quickMatchMmr, qmMmr, ifNotPresent);
-
-        final Optional<Integer> heroLeagueMmr = readMmr(account.getLeaderboardRankings(), "HeroLeague");
-        applyToLabel(heroLeagueMmr, hlMmr, ifNotPresent);
-
-        final Optional<Integer> teamLeagueMmr = readMmr(account.getLeaderboardRankings(), "TeamLeague");
-        applyToLabel(teamLeagueMmr, tlMmr, ifNotPresent);
-    }
-
-    private Optional<Integer> readMmr(final List<LeaderboardRanking> leaderboardRankings, final String mode) {
-        return leaderboardRankings.stream()
-                .filter(ranking -> ranking.getGameMode().equals(mode))
-                .map(LeaderboardRanking::getCurrentMmr)
-                .findAny();
-    }
-
-    private void applyToLabel(final Optional<?> value, final Label applyTo, final String ifNotPresent) {
-        if (value.isPresent()) {
-            applyTo.setText(String.valueOf(value.get()));
-        } else {
-            applyTo.setText(ifNotPresent);
-        }
     }
 
     private void updatePlayers(final List<Account> newAccounts) {

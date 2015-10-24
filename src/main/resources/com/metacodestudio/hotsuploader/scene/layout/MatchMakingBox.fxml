@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10.0" styleClass="header" stylesheets="@../../../../../styles/window.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.metacodestudio.hotsuploader.scene.layout.MatchMakingBox">
+   <children>
+      <BorderPane>
+         <left>
+            <Label styleClass="primary" text="Team League MMR: " BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Label fx:id="tlMmr" styleClass="secondary" text="N/A" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+      <BorderPane>
+         <left>
+            <Label styleClass="primary" text="Hero League MMR: " BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Label fx:id="hlMmr" styleClass="secondary" text="N/A" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+      <BorderPane>
+         <left>
+            <Label styleClass="primary" text="Quick Match MMR: " BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Label fx:id="qmMmr" styleClass="secondary" text="N/A" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </children>
+</VBox>
