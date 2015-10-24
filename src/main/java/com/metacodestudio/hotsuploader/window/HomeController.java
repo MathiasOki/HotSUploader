@@ -71,13 +71,6 @@ public class HomeController {
     private TextField playerSearchInput;
 
     @FXML
-    @ActionTrigger("viewProfile")
-    private Button viewProfile;
-
-    @FXML
-    private ChoiceBox<Account> accountSelect;
-
-    @FXML
     @ActionTrigger("lookupHero")
     private Button lookupHero;
 
@@ -90,7 +83,6 @@ public class HomeController {
 
     private FileHandler fileHandler;
     private DesktopWrapper desktop;
-    private StormHandler stormHandler;
     @FXML
     private Label uploadedReplays;
     @FXML
@@ -100,7 +92,7 @@ public class HomeController {
     @PostConstruct
     public void init() {
         desktop = new DesktopWrapper();
-        stormHandler = viewFlowContext.getRegisteredObject(StormHandler.class);
+        viewFlowContext.register(desktop);
         httpClient = viewFlowContext.getRegisteredObject(SimpleHttpClient.class);
         fileHandler = viewFlowContext.getRegisteredObject(FileHandler.class);
         logo.setOnMouseClicked(event -> doOpenHotsLogs());
@@ -113,10 +105,10 @@ public class HomeController {
         }
 
 
-        setupAccounts();
-
         checkNewVersion();
         fileHandler.beginWatch();
+
+        matchMakingBox.init(viewFlowContext);
     }
 
     private void checkNewVersion() {
@@ -209,66 +201,6 @@ public class HomeController {
             playerSearchInput.setText("");
         }
         desktop.browse(SimpleHttpClient.encode("https://www.hotslogs.com/PlayerSearch?Name=" + playerName));
-    }
-
-    @ActionMethod("viewProfile")
-    private void doViewProfile() throws IOException {
-        Account account = accountSelect.getValue();
-        if (account == null) {
-            return;
-        }
-        desktop.browse(SimpleHttpClient.encode("https://www.hotslogs.com/Player/Profile?PlayerID=" + account.getPlayerId()));
-    }
-
-    private void setupAccounts() {
-        accountSelect.converterProperty().setValue(new StringConverter<Account>() {
-            @Override
-            public String toString(final Account object) {
-                if (object == null) {
-                    return "";
-                }
-                return object.getName();
-            }
-
-            @Override
-            public Account fromString(final String string) {
-                return null;
-            }
-        });
-
-        matchMakingBox.bind(accountSelect.getSelectionModel());
-        accountSelect.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.intValue() != -1) {
-                viewProfile.setDisable(false);
-            }
-        });
-        ScheduledService<List<Account>> service = new AccountService(stormHandler, httpClient);
-        service.setDelay(Duration.ZERO);
-        service.setPeriod(Duration.minutes(10));
-
-        service.setOnSucceeded(event -> updatePlayers(service.getValue()));
-        service.start();
-    }
-
-    private void updatePlayers(final List<Account> newAccounts) {
-        Account reference = null;
-        if (!accountSelect.getItems().isEmpty()) {
-            reference = accountSelect.getValue();
-        }
-
-        accountSelect.getItems().setAll(newAccounts);
-        if (reference != null) {
-            final Account finalReference = reference;
-            Optional<Account> optionalAccount = accountSelect.getItems()
-                    .stream()
-                    .filter(account -> account.getPlayerId().equals(finalReference.getPlayerId()))
-                    .findFirst();
-            if (optionalAccount.isPresent()) {
-                accountSelect.setValue(optionalAccount.get());
-            }
-        } else if (!newAccounts.isEmpty()) {
-            accountSelect.setValue(newAccounts.get(0));
-        }
     }
 
     private void setupFileHandler() {

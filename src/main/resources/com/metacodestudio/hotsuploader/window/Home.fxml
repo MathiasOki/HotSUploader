@@ -42,29 +42,7 @@
    <right>
           <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
               <children>
-                  <BorderPane>
-                      <left>
-                          <ChoiceBox fx:id="accountSelect" prefWidth="150.0" BorderPane.alignment="CENTER">
-                              <BorderPane.margin>
-                                  <Insets top="10.0" />
-                              </BorderPane.margin>
-                          </ChoiceBox>
-                      </left>
-               <top>
-                        <Label alignment="CENTER" styleClass="primary" text="Players" BorderPane.alignment="CENTER">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                        </Label>
-               </top>
-               <right>
-                        <Button fx:id="viewProfile" disable="true" mnemonicParsing="false" prefWidth="75.0" text="Profile" BorderPane.alignment="CENTER">
-                            <BorderPane.margin>
-                                <Insets top="10.0" />
-                            </BorderPane.margin>
-                        </Button>
-               </right>
-                  </BorderPane>
+
             <MatchMakingBox fx:id="matchMakingBox" spacing="10.0">
             </MatchMakingBox>
             <VBox alignment="BOTTOM_CENTER" VBox.vgrow="SOMETIMES">
