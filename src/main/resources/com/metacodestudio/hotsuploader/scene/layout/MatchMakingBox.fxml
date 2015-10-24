@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10.0" styleClass="header" stylesheets="@../../../../../styles/window.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.metacodestudio.hotsuploader.scene.layout.MatchMakingBox">
+<fx:root spacing="10.0" styleClass="header" stylesheets="@../../../../../styles/window.css" type="VBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane>
          <left>
@@ -31,4 +31,4 @@
          </right>
       </BorderPane>
    </children>
-</VBox>
+</fx:root>

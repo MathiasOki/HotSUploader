@@ -4,17 +4,18 @@ import com.metacodestudio.hotsuploader.models.Account;
 import com.metacodestudio.hotsuploader.models.LeaderboardRanking;
 import io.datafx.controller.ViewController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * @author Eivind Vegsundvåg
  */
-@ViewController(value = "MatchMakingBox.fxml")
 public class MatchMakingBox extends VBox {
 
     @FXML
@@ -25,6 +26,21 @@ public class MatchMakingBox extends VBox {
 
     @FXML
     private Label tlMmr;
+
+
+    public MatchMakingBox() {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                getClass().getResource("MatchMakingBox.fxml"));
+
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 
     public void bind(SingleSelectionModel<Account> selectionModel) {
         selectionModel.selectedIndexProperty().addListener((observable, oldValue, newValue) -> {

@@ -14,6 +14,7 @@
 <?import javafx.scene.text.*?>
 
 <?import com.metacodestudio.hotsuploader.scene.layout.MatchMakingBox?>
+
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="header" stylesheets="@../../../../styles/window.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -64,33 +65,7 @@
                         </Button>
                </right>
                   </BorderPane>
-            <MatchMakingBox spacing="10.0">
-               <children>
-                        <BorderPane>
-                            <left>
-                                <Label styleClass="primary" text="Team League MMR: " BorderPane.alignment="CENTER" />
-                            </left>
-                            <right>
-                                <Label fx:id="tlMmr" styleClass="secondary" text="N/A" BorderPane.alignment="CENTER" />
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <Label styleClass="primary" text="Hero League MMR: " BorderPane.alignment="CENTER" />
-                            </left>
-                            <right>
-                                <Label fx:id="hlMmr" styleClass="secondary" text="N/A" BorderPane.alignment="CENTER" />
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <Label styleClass="primary" text="Quick Match MMR: " BorderPane.alignment="CENTER" />
-                            </left>
-                            <right>
-                                <Label fx:id="qmMmr" styleClass="secondary" text="N/A" BorderPane.alignment="CENTER" />
-                            </right>
-                        </BorderPane>
-               </children>
+            <MatchMakingBox fx:id="matchMakingBox" spacing="10.0">
             </MatchMakingBox>
             <VBox alignment="BOTTOM_CENTER" VBox.vgrow="SOMETIMES">
                <children>
